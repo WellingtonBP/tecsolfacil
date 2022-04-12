@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :api, Api.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "pgdbuser",
+  password: "pgdbpass",
   hostname: "localhost",
   database: "api_dev",
   show_sensitive_data_on_connection_error: true,
