@@ -4,7 +4,7 @@ defmodule Api.Accounts.User do
   import Ecto.Changeset
 
   alias Api.Repo
-  
+
   @email_regex ~r/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
   schema "users" do
@@ -45,9 +45,35 @@ defmodule Api.Accounts.User do
   end
 
   def valid_password?(%__MODULE__{hashed_password: hashed_password}, password)
-      when is_binary(hashed_password) and byte_size(password) > 0 do
+  when is_binary(hashed_password) and byte_size(password) > 0 do
     Bcrypt.verify_pass(password, hashed_password)
   end
-
   def valid_password?(_, _), do: false
+
+  def get_errors_message(changeset) do
+    if !changeset.valid? do
+      errors = 
+        changeset.errors
+        |> Enum.map(fn {key, {message, meta}} ->
+          {key, interpolation(message, meta)}
+        end)
+
+      %{errors: errors}
+    else
+      nil
+    end
+  end
+
+  defp interpolation(message, meta) do
+    ~r/(?<head>)%{[^}]+}(?<tail>)/
+    |> Regex.split(message, on: [:head, :tail])
+    |> Enum.reduce("", fn
+      <<"%{" <> rest>>, acc ->
+        key = String.trim_trailing(rest, "}") |> String.to_atom()
+        value = Keyword.fetch!(meta, key) 
+        acc <> to_string(value)
+      segment, acc ->
+        acc <> segment
+    end)
+  end
 end
