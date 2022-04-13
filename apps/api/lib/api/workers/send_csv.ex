@@ -1,5 +1,8 @@
 defmodule Api.Worker.SendCsv do
-	use Jobs
+	#	use Jobs
+	use Oban.Worker,
+		queue: :zip_csv,
+		max_attempts: 5
 
 	alias Api.AccountsEmail
 	alias Api.Mailer
@@ -8,7 +11,9 @@ defmodule Api.Worker.SendCsv do
 
 	@csv_header [:bairro, :cep, :complemento, :ddd, :localidade, :logradouro, :uf, :inserted_at, :updated_at]
 
-	def execute(%{email: email}) do
+	#def execute(%{email: email}) do
+	@impl Oban.Worker
+	def perform(%Oban.Job{args: %{"email" => email}}) do
 		with filepath <- get_filepath(),
 				 csv_str <- get_csv_str(),
 				 :ok <- File.write(filepath, csv_str) do
@@ -19,6 +24,9 @@ defmodule Api.Worker.SendCsv do
 
 			File.rm(filepath)
 			resp
+		else
+			error ->
+				{:error, error}
 		end
 	end
 

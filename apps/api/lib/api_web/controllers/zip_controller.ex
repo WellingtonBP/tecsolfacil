@@ -1,7 +1,6 @@
 defmodule ApiWeb.ZipController do
   use ApiWeb, :controller
 
-  alias Api.Worker.SendCsv
   alias Api.ZipCode
 
   action_fallback ApiWeb.FallbackController
@@ -13,8 +12,8 @@ defmodule ApiWeb.ZipController do
   end
 
   def index(conn, _) do
-    %{email: conn.assigns.current_user.email}
-    |> SendCsv.new()
+    conn.assigns.current_user.email
+    |> ZipCode.send_csv()
 
     conn
     |> render("csv.json")
