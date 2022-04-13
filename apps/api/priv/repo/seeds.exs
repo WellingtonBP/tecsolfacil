@@ -9,3 +9,5 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+%{email: "admin@email.com", password: "Adm1inP4ass"}
+|> Api.Accounts.create_user()
