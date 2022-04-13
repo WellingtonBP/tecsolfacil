@@ -2,7 +2,7 @@ defmodule Api.ZipCode.Info do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "candidates" do
+  schema "zipcode" do
     field :cep, :string
     field :localidade, :string
     field :uf, :string
@@ -14,8 +14,8 @@ defmodule Api.ZipCode.Info do
     timestamps()
   end
 
-  def changeset(candidate, attrs) do
-    candidate
+  def changeset(zipcode, attrs) do
+    zipcode
     |> cast(attrs, [:cep, :localidade, :uf, :logradouro, :complemento, :bairro, :ddd])
     |> validate_required([:cep, :localidade, :uf])
     |> format_zip()

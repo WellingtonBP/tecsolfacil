@@ -11,10 +11,11 @@ defmodule ApiWeb.Plug.Authenticate do
       conn
       |> assign(:current_user, Api.Accounts.get_user(id))
     else
-      error ->
+      _error ->
         conn
         |> put_resp_content_type("application/json")
-        |> send_resp(401, error)
+        |> send_resp(401, Jason.encode!(%{message: "unauthenticated"}))
+        |> halt()
     end
   end
 end
