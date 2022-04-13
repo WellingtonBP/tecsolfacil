@@ -5,8 +5,18 @@ defmodule ApiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticated do
+    plug ApiWeb.Plug.Authenticate
+  end
+
   scope "/api", ApiWeb do
     pipe_through :api
+
+    post "/auth/login", UserController, :create
+  end
+
+  scope "/api", ApiWeb do
+    pipe_through [:api, :authenticated]
   end
 
   # Enables the Swoosh mailbox preview in development.
