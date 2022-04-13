@@ -9,6 +9,10 @@ config :api, Api.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+
+# Config tesla adapter
+config :tesla, adapter: Tesla.Adapter.Hackney
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
