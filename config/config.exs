@@ -17,6 +17,11 @@ config :api, ApiWeb.Endpoint,
   pubsub_server: Api.PubSub,
   live_view: [signing_salt: "3F4J4XZ7"]
 
+# Config Oban
+config :api, Oban,
+  repo: Api.Repo,
+  queues: [zip_csv: 8]
+
 # CSV tmp directory
 config :api, csv_tmp_dir: "#{File.cwd!}/csv_tmp"
 
