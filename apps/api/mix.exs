@@ -48,7 +48,9 @@ defmodule Api.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:bcrypt_elixir, "~> 2.0"}
+      {:bcrypt_elixir, "~> 2.0"},
+      {:tesla, "~> 1.4"},
+      {:hackney, "~> 1.17"}
     ]
   end
 
