@@ -15,20 +15,26 @@ defmodule Api.Accounts.User do
     timestamps()
   end
 
-  def changeset(user, attrs) do
+  def changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:email, :password])
-    |> validate_email()
+    |> validate_email(opts)
     |> validate_password()
   end
 
-  defp validate_email(changeset) do
+  defp validate_email(changeset, opts) do
     changeset
     |> validate_required([:email])
-    |> validate_format(:email, @email_regex, message: "Invalid Email")
-    |> unsafe_validate_unique(:email, Repo)
+    |> validate_format(:email, @email_regex, message: "invalid email")
+    |> check_email_duplication(Keyword.get(opts, :check_duplication, true))
     |> unique_constraint(:email)
   end
+
+  defp check_email_duplication(changeset, true) do
+    changeset
+    |> unsafe_validate_unique(:email, Repo)
+  end
+  defp check_email_duplication(changeset, _), do: changeset 
 
   defp validate_password(changeset) do
     changeset
@@ -54,7 +60,7 @@ defmodule Api.Accounts.User do
     if !changeset.valid? do
       errors = 
         changeset.errors
-        |> Enum.map(fn {key, {message, meta}} ->
+        |> Map.new(fn {key, {message, meta}} ->
           {key, interpolation(message, meta)}
         end)
 
