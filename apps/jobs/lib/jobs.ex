@@ -3,16 +3,16 @@ defmodule Jobs do
   Documentation for `Jobs`.
   """
 
-  @doc """
-  Hello world.
+  alias Jobs.Behaviour
+  alias Jobs.Scheduler
 
-  ## Examples
+  defmacro __using__(_) do
+    quote do
+      @behaviour unquote(Behaviour)
 
-      iex> Jobs.hello()
-      :world
-
-  """
-  def hello do
-    :world
+      def new(args) when is_map(args) do
+        Scheduler.push_job({&__MODULE__.execute/1, [args]})
+      end
+    end
   end
 end

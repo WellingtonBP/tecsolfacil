@@ -8,13 +8,11 @@ defmodule Jobs.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: Jobs.Worker.start_link(arg)
-      # {Jobs.Worker, arg}
+      {Jobs.Scheduler, Application.get_env(:jobs, :worker_count, 5)},
+      Jobs.WorkerSupervisor
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Jobs.Supervisor]
+    opts = [strategy: :one_for_all, name: Jobs.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
