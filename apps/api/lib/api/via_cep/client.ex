@@ -9,16 +9,19 @@ defmodule Api.ViaCEP.Client do
     |> handle_response()
   end
 
-	defp handle_response({:ok, %Tesla.Env{body: %{"erro" => "true"}, status: 200}}) do
+  defp handle_response({:ok, %Tesla.Env{body: %{"erro" => "true"}, status: 200}}) do
     {:error, :not_found}
   end
+
   defp handle_response({:ok, %Tesla.Env{status: 400}}) do
     {:error, :bad_request}
   end
+
   defp handle_response({:ok, %Tesla.Env{body: body, status: 200}}) do
     {:ok, body}
   end
-	defp handle_response(_) do
-		{:error, :server_error}
-	end
+
+  defp handle_response(_) do
+    {:error, :server_error}
+  end
 end

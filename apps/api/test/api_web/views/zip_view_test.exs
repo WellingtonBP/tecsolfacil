@@ -9,6 +9,7 @@ defmodule ApiWeb.ZipViewTest do
   describe "render/2" do
     test "renders zip.json" do
       zip_info = %Info{}
+
       response =
         zip_info
         |> Map.from_struct()

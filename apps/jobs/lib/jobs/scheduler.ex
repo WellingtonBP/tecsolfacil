@@ -11,8 +11,8 @@ defmodule Jobs.Scheduler do
 
   def next_job() do
     GenServer.call(@me, :next_job)
-  end 
-  
+  end
+
   def push_job(job) do
     GenServer.cast(@me, {:push, job})
   end

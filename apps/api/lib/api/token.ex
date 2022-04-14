@@ -7,11 +7,8 @@ defmodule Api.Token do
     {:ok, token}
   end
 
-
   def verify(token) do
-    case Phoenix.Token.verify(ApiWeb.Endpoint, @signing_salt, token,
-             max_age: @token_age_secs
-           ) do
+    case Phoenix.Token.verify(ApiWeb.Endpoint, @signing_salt, token, max_age: @token_age_secs) do
       {:ok, data} -> {:ok, data}
       _error -> {:error, :unauthenticated}
     end

@@ -23,7 +23,7 @@ config :api, Oban,
   queues: [zip_csv: 8]
 
 # CSV tmp directory
-config :api, csv_tmp_dir: "#{File.cwd!}/csv_tmp"
+config :api, csv_tmp_dir: "#{File.cwd!()}/csv_tmp"
 
 # Phoenix token salt
 config :api, phx_token_salt: System.get_env("PHX_TOKEN_SALT")
@@ -35,9 +35,9 @@ config :api, phx_token_salt: System.get_env("PHX_TOKEN_SALT")
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :api, Api.Mailer, 
+config :api, Api.Mailer,
   adapter: Swoosh.Adapters.Sendgrid,
-  api_key: System.get_env("SENDGRID_KEY") 
+  api_key: System.get_env("SENDGRID_KEY")
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, Swoosh.ApiClient.Hackney
