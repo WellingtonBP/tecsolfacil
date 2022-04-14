@@ -1,5 +1,5 @@
 defmodule Api.Token do
-  @signing_salt "JWT_TOKEN"
+  @signing_salt Application.get_env(:api, :phx_token_salt)
   @token_age_secs 24 * 3600
 
   def sign(user) do

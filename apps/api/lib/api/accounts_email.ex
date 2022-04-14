@@ -5,7 +5,7 @@ defmodule Api.AccountsEmail do
     new()
     |> to(email)
     |> from(System.get_env("EMAIL"))
-    |> subject("Adresses CSV File")
+    |> subject("Addresses CSV File")
     |> text_body("Here is all adresses on database")
     |> attachment(csv_path)
   end

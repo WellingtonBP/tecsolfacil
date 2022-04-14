@@ -53,7 +53,8 @@ defmodule Api.MixProject do
       {:hackney, "~> 1.17"},
      # {:jobs, in_umbrella: true},
       {:csv, in_umbrella: true},
-      {:oban, "~> 2.11"}
+      {:oban, "~> 2.11"},
+      {:mock, "~> 0.3.7", only: [:test]}
     ]
   end
 
