@@ -51,7 +51,7 @@ defmodule Api.MixProject do
       {:bcrypt_elixir, "~> 2.0"},
       {:tesla, "~> 1.4"},
       {:hackney, "~> 1.17"},
-     # {:jobs, in_umbrella: true},
+      # {:jobs, in_umbrella: true},
       {:csv, in_umbrella: true},
       {:oban, "~> 2.11"},
       {:mock, "~> 0.3.7", only: [:test]}

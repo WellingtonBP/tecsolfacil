@@ -5,12 +5,12 @@ defmodule Csv do
 
   @spec encode([map()], [atom()]) :: binary()
   def encode(lines, headers) do
-    csv_header = 
+    csv_header =
       headers
       |> Enum.map_join(",", &encode_header/1)
       |> Kernel.<>("\n")
 
-    csv_lines = 
+    csv_lines =
       lines
       |> Enum.map_join("\n", &encode_lines(&1, headers))
 

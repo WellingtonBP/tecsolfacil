@@ -1,4 +1,7 @@
 defmodule Api.Accounts.User do
+  @moduledoc """
+    User Schema
+  """
 
   use Ecto.Schema
   import Ecto.Changeset
@@ -34,7 +37,8 @@ defmodule Api.Accounts.User do
     changeset
     |> unsafe_validate_unique(:email, Repo)
   end
-  defp check_email_duplication(changeset, _), do: changeset 
+
+  defp check_email_duplication(changeset, _), do: changeset
 
   defp validate_password(changeset) do
     changeset
@@ -51,22 +55,23 @@ defmodule Api.Accounts.User do
   end
 
   def valid_password?(%__MODULE__{hashed_password: hashed_password}, password)
-  when is_binary(hashed_password) and byte_size(password) > 0 do
+      when is_binary(hashed_password) and byte_size(password) > 0 do
     Bcrypt.verify_pass(password, hashed_password)
   end
+
   def valid_password?(_, _), do: false
 
   def get_errors_message(changeset) do
-    if !changeset.valid? do
-      errors = 
+    if changeset.valid? do
+      nil
+    else
+      errors =
         changeset.errors
         |> Map.new(fn {key, {message, meta}} ->
           {key, interpolation(message, meta)}
         end)
 
       %{errors: errors}
-    else
-      nil
     end
   end
 
@@ -76,8 +81,9 @@ defmodule Api.Accounts.User do
     |> Enum.reduce("", fn
       <<"%{" <> rest>>, acc ->
         key = String.trim_trailing(rest, "}") |> String.to_atom()
-        value = Keyword.fetch!(meta, key) 
+        value = Keyword.fetch!(meta, key)
         acc <> to_string(value)
+
       segment, acc ->
         acc <> segment
     end)

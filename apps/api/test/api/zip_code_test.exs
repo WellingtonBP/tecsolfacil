@@ -11,25 +11,25 @@ defmodule Api.ZipCodeTest do
     test "fetch zip info from viacep if is not available on database" do
       with_mocks([
         {Repo, [],
-          [
-            get_by: fn _, _ -> nil end,
-            insert: fn data -> {:ok, data} end
-          ]},
+         [
+           get_by: fn _, _ -> nil end,
+           insert: fn data -> {:ok, data} end
+         ]},
         {Client, [],
-          [
-            zip_info: fn _ -> {:ok, %{}} end
-          ]},
+         [
+           zip_info: fn _ -> {:ok, %{}} end
+         ]},
         {Info, [],
-          [
-            changeset: fn _, data -> data end
-          ]}
+         [
+           changeset: fn _, data -> data end
+         ]}
       ]) do
         assert ZipCode.get_zipcode_info("00000000") == {:ok, %{}}
       end
     end
 
     test "fetch zip from database do" do
-      with_mock Repo, [get_by: fn _, _ -> %{} end] do
+      with_mock Repo, get_by: fn _, _ -> %{} end do
         assert ZipCode.get_zipcode_info("00000000") == {:ok, %{}}
       end
     end

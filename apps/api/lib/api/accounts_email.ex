@@ -1,4 +1,8 @@
 defmodule Api.AccountsEmail do
+  @moduledoc """
+    Accounts Email Helpers
+  """
+
   import Swoosh.Email
 
   def csv(email, csv_path) do

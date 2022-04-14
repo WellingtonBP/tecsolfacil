@@ -1,4 +1,8 @@
 defmodule Api.ZipCode.Info do
+  @moduledoc """
+    ZipCode Schema
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -22,10 +26,10 @@ defmodule Api.ZipCode.Info do
   end
 
   def format_zip(changeset) do
-    zip = 
+    zip =
       changeset.changes.cep
       |> String.replace("-", "")
-   
+
     changeset
     |> put_change(:cep, zip)
   end

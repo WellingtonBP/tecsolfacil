@@ -24,7 +24,7 @@ config :api, ApiWeb.Endpoint,
   server: false
 
 # Phoenix token salt
-config :api, phx_token_salt: "token_test"
+System.put_env("PHX_TOKEN_SALT", "token_test")
 
 # Tesla Mock
 config :tesla, adapter: Tesla.Mock

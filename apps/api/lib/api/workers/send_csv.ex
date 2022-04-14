@@ -1,49 +1,63 @@
 defmodule Api.Worker.SendCsv do
-	#	use Jobs
-	use Oban.Worker,
-		queue: :zip_csv,
-		max_attempts: 5
+  @moduledoc """
+    Worker - Send CSV to user asynchronously
+  """
 
-	alias Api.AccountsEmail
-	alias Api.Mailer
-	alias Api.Repo
-	alias Api.ZipCode.Info
+  # 	use Jobs
+  use Oban.Worker,
+    queue: :zip_csv,
+    max_attempts: 5
 
-	@csv_header [:bairro, :cep, :complemento, :ddd, :localidade, :logradouro, :uf, :inserted_at, :updated_at]
+  alias Api.AccountsEmail
+  alias Api.Mailer
+  alias Api.Repo
+  alias Api.ZipCode.Info
 
-	#def execute(%{email: email}) do
-	@impl Oban.Worker
-	def perform(%Oban.Job{args: %{"email" => email}}) do
-		with filepath <- get_filepath(),
-				 csv_str <- get_csv_str(),
-				 :ok <- File.write(filepath, csv_str) do
-			resp = 
-				email
-				|> AccountsEmail.csv(filepath)
-				|> Mailer.deliver() 
+  @csv_header [
+    :bairro,
+    :cep,
+    :complemento,
+    :ddd,
+    :localidade,
+    :logradouro,
+    :uf,
+    :inserted_at,
+    :updated_at
+  ]
 
-			File.rm(filepath)
-			resp
-		else
-			error ->
-				{:error, error}
-		end
-	end
+  # def execute(%{email: email}) do
+  @impl Oban.Worker
+  def perform(%Oban.Job{args: %{"email" => email}}) do
+    with filepath <- get_filepath(),
+         csv_str <- get_csv_str(),
+         :ok <- File.write(filepath, csv_str) do
+      resp =
+        email
+        |> AccountsEmail.csv(filepath)
+        |> Mailer.deliver()
 
-	defp get_csv_str do
-		Info
-		|> Repo.all()
-		|> Enum.map(&Map.from_struct/1)
-		|> Csv.encode(@csv_header)
-	end
+      File.rm(filepath)
+      resp
+    else
+      error ->
+        {:error, error}
+    end
+  end
 
-	defp get_filepath do
-		Application.get_env(:api, :csv_tmp_dir)
-		|> Kernel.<>("/#{get_date_str()}.csv")
-	end
+  defp get_csv_str do
+    Info
+    |> Repo.all()
+    |> Enum.map(&Map.from_struct/1)
+    |> Csv.encode(@csv_header)
+  end
 
-	defp get_date_str do
-		DateTime.utc_now()
-		|> to_string()
-	end
+  defp get_filepath do
+    Application.get_env(:api, :csv_tmp_dir)
+    |> Kernel.<>("/#{get_date_str()}.csv")
+  end
+
+  defp get_date_str do
+    DateTime.utc_now()
+    |> to_string()
+  end
 end

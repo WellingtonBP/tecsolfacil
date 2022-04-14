@@ -1,30 +1,37 @@
 defmodule Api.Accounts do
-	alias Api.Accounts.User
-	alias Api.Repo
+  @moduledoc """
+    Accounts Context Functions
+  """
 
-	def create_user(params) do
-		%User{}
-		|> User.changeset(params)
-		|> Repo.insert()
-	end
+  alias Api.Accounts.User
+  alias Api.Repo
 
-	def get_user_by_email_and_password(email, password)
-	when is_binary(email) and is_binary(password) do
+  @spec create_user(map()) :: {:ok | :error, User.t() | Ecto.Changeset.t()}
+  def create_user(params) do
+    %User{}
+    |> User.changeset(params)
+    |> Repo.insert()
+  end
 
-		errors = 
-			%User{}
-			|> User.changeset(%{email: email, password: password}, check_duplication: false)
-			|> User.get_errors_message()
+  @spec get_user_by_email_and_password(binary(), binary()) ::
+          {:ok | :error, User.t() | list() | atom()}
+  def get_user_by_email_and_password(email, password)
+      when is_binary(email) and is_binary(password) do
+    errors =
+      %User{}
+      |> User.changeset(%{email: email, password: password}, check_duplication: false)
+      |> User.get_errors_message()
 
-		with nil <- errors,
-				 user <- Repo.get_by(User, email: email),
-				 true <- User.valid_password?(user, password) do
-			{:ok, user}
-		else
-			%{errors: _} = r -> {:error, r}
-			false -> {:error, :invalid_email_or_password}
-		end
-	end
+    with nil <- errors,
+         user <- Repo.get_by(User, email: email),
+         true <- User.valid_password?(user, password) do
+      {:ok, user}
+    else
+      %{errors: _} = r -> {:error, r}
+      false -> {:error, :invalid_email_or_password}
+    end
+  end
 
-	def get_user(id), do: Repo.get!(User, id)
+  @spec get_user(integer()) :: User.t()
+  def get_user(id), do: Repo.get!(User, id)
 end

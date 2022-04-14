@@ -1,4 +1,5 @@
 defmodule Jobs.WorkerSupervisor do
+  @moduledoc false
   use DynamicSupervisor
 
   alias Jobs.Worker
@@ -13,7 +14,7 @@ defmodule Jobs.WorkerSupervisor do
     DynamicSupervisor.init(strategy: :one_for_one)
   end
 
-  def start_worker() do
+  def start_worker do
     {:ok, _} = DynamicSupervisor.start_child(@me, Worker)
   end
 end

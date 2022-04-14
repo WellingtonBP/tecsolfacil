@@ -13,7 +13,8 @@ defmodule ApiWeb.UserControllerTest do
     test "return token for a valid email and password", %{conn: conn} do
       user = create_user()
 
-      conn = post(conn, Routes.user_path(conn, :create), %{email: user.email, password: get_password()})
+      conn =
+        post(conn, Routes.user_path(conn, :create), %{email: user.email, password: get_password()})
 
       assert %{"token" => token} = json_response(conn, 200)
       assert {:ok, id} = Token.verify(token)
@@ -23,11 +24,15 @@ defmodule ApiWeb.UserControllerTest do
     test "return 422 for invalid user and password format", %{conn: conn} do
       conn = post(conn, Routes.user_path(conn, :create), %{email: "invalid", password: "invalid"})
 
-      assert %{"errors" => _} = json_response(conn, 422) 
+      assert %{"errors" => _} = json_response(conn, 422)
     end
 
     test "return 401 for invalid user and password", %{conn: conn} do
-      conn = post(conn, Routes.user_path(conn, :create), %{email: "validformat@email.com", password: "validPass"})
+      conn =
+        post(conn, Routes.user_path(conn, :create), %{
+          email: "validformat@email.com",
+          password: "validPass"
+        })
 
       assert json_response(conn, 401) == %{"message" => "invalid email or password"}
     end

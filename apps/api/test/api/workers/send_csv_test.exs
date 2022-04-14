@@ -7,6 +7,7 @@ defmodule Api.Worker.SendCsvTest do
   alias Api.Worker.SendCsv
 
   describe "perform/1" do
+    @tag disable_on_ci: true
     test "should create csv and sent to email" do
       System.put_env("EMAIL", "sender@email.com")
 

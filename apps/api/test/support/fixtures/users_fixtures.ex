@@ -1,9 +1,12 @@
 defmodule Api.UsersFixtures do
+  @moduledoc """
+    Test Helpers
+  """
 
   alias Api.Accounts
 
   def create_user do
-    {:ok, user} = 
+    {:ok, user} =
       %{
         email: "test@email.com",
         password: "Test1P4ss"

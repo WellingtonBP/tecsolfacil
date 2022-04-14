@@ -13,7 +13,8 @@ defmodule Api.AccountsTest do
     end
 
     test "shoud return error for non-existing user" do
-      assert {:error, :invalid_email_or_password} = Accounts.get_user_by_email_and_password("notfound@email.com", "Ud92jd29")
+      assert {:error, :invalid_email_or_password} =
+               Accounts.get_user_by_email_and_password("notfound@email.com", "Ud92jd29")
     end
 
     test "shoud return error for invalid email or password format" do
@@ -25,13 +26,13 @@ defmodule Api.AccountsTest do
   describe "get_user/1" do
     test "should return user for a valid id" do
       user = create_user()
-      
+
       assert user_res = Accounts.get_user(user.id)
       assert user_res.email == user.email
     end
 
     test "shoud raise an error for invalid id" do
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_user(-1) end 
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_user(-1) end
     end
   end
 end

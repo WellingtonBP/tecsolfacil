@@ -11,7 +11,7 @@ defmodule ApiWeb.ZipView do
       bairro: zip[:bairro],
       localidade: zip[:localidade],
       uf: zip[:uf],
-      ddd: zip[:ddd],
+      ddd: zip[:ddd]
     }
   end
 
