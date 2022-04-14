@@ -14,4 +14,8 @@ defmodule ApiWeb.ZipView do
       ddd: zip[:ddd],
     }
   end
+
+  def render("csv.json", _) do
+    %{message: "csv sent to your email"}
+  end
 end

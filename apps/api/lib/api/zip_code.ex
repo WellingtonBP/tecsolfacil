@@ -1,6 +1,7 @@
 defmodule Api.ZipCode do
 
 	alias Api.Repo
+	alias Api.Worker.SendCsv
 	alias Api.ZipCode.Info, as: ZipInfo
 	alias Api.ViaCEP.Client, as: ViaCEP
 
@@ -24,4 +25,10 @@ defmodule Api.ZipCode do
 		|> Repo.insert()
 	end
 	defp save_zip(response), do: response 
+
+	def send_csv(email) do
+		%{email: email}
+		|> SendCsv.new()
+		|> Oban.insert()
+	end
 end

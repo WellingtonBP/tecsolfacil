@@ -10,4 +10,12 @@ defmodule ApiWeb.ZipController do
       render(conn, "zip.json", zip: zip_info)
     end
   end
+
+  def index(conn, _) do
+    conn.assigns.current_user.email
+    |> ZipCode.send_csv()
+
+    conn
+    |> render("csv.json")
+  end
 end

@@ -50,7 +50,10 @@ defmodule Api.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:bcrypt_elixir, "~> 2.0"},
       {:tesla, "~> 1.4"},
-      {:hackney, "~> 1.17"}
+      {:hackney, "~> 1.17"},
+     # {:jobs, in_umbrella: true},
+      {:csv, in_umbrella: true},
+      {:oban, "~> 2.11"}
     ]
   end
 

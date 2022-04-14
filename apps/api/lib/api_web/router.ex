@@ -19,6 +19,7 @@ defmodule ApiWeb.Router do
     pipe_through [:api, :authenticated]
 
     get "/zip/:zip_code", ZipController, :show
+    get "/zip", ZipController, :index
   end
 
   # Enables the Swoosh mailbox preview in development.

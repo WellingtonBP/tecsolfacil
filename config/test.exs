@@ -13,6 +13,9 @@ config :api, Api.Repo,
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
+# disable oban plugins and queues for tests
+config :api, Oban, queues: false, plugins: false
+
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :api, ApiWeb.Endpoint,
