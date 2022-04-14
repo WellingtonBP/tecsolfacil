@@ -13,4 +13,5 @@ defmodule Api.UsersFixtures do
     user
   end
 
+  def get_password, do: "Test1P4ss"
 end

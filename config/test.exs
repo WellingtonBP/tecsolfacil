@@ -23,6 +23,9 @@ config :api, ApiWeb.Endpoint,
   secret_key_base: "DFwJeK5C5dPSFyL/x53+EhcEZJCNO3DHxr9xbPu4PGewT+LhEkOAWwaaIi8Tn7Ni",
   server: false
 
+# Phoenix token salt
+config :api, phx_token_salt: "token_test"
+
 # Tesla Mock
 config :tesla, adapter: Tesla.Mock
 
