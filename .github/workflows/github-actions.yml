@@ -45,7 +45,7 @@ jobs:
     - name: Check code smells
       run: mix credo --strict
     - name: Run tests
-      run: mix test --warnings-as-errors
+      run: mix test --warnings-as-errors --exclude disable_on_ci
     - name: Check seeds consistency
       run: |
         mix ecto.create
