@@ -1,4 +1,8 @@
 defmodule ApiWeb.Plug.Authenticate do
+  @moduledoc """
+    Check user authentication
+  """
+
   import Plug.Conn
 
   def init(opts) do

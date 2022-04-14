@@ -1,4 +1,8 @@
 defmodule Api.ZipCode.Info do
+  @moduledoc """
+    ZipCode Schema
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 

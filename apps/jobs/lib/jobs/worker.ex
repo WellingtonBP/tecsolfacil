@@ -1,4 +1,5 @@
 defmodule Jobs.Worker do
+  @moduledoc false
   use GenServer
 
   alias Jobs.Scheduler

@@ -1,13 +1,20 @@
 defmodule Api.Accounts do
+  @moduledoc """
+    Accounts Context Functions
+  """
+
   alias Api.Accounts.User
   alias Api.Repo
 
+  @spec create_user(map()) :: {:ok | :error, User.t() | Ecto.Changeset.t()}
   def create_user(params) do
     %User{}
     |> User.changeset(params)
     |> Repo.insert()
   end
 
+  @spec get_user_by_email_and_password(binary(), binary()) ::
+          {:ok | :error, User.t() | list() | atom()}
   def get_user_by_email_and_password(email, password)
       when is_binary(email) and is_binary(password) do
     errors =
@@ -25,5 +32,6 @@ defmodule Api.Accounts do
     end
   end
 
+  @spec get_user(integer()) :: User.t()
   def get_user(id), do: Repo.get!(User, id)
 end

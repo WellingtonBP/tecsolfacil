@@ -1,9 +1,14 @@
 defmodule Api.ViaCEP.Client do
+  @moduledoc """
+    ViaCEP API client - Get address by zip code
+  """
+
   use Tesla
 
   plug Tesla.Middleware.BaseUrl, "https://viacep.com.br/ws"
   plug Tesla.Middleware.JSON
 
+  @spec zip_info(binary()) :: {:ok | :error, atom() | map()}
   def zip_info(zip) do
     get("/#{zip}/json")
     |> handle_response()

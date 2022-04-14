@@ -1,4 +1,8 @@
 defmodule Api.Worker.SendCsv do
+  @moduledoc """
+    Worker - Send CSV to user asynchronously
+  """
+
   # 	use Jobs
   use Oban.Worker,
     queue: :zip_csv,

@@ -25,9 +25,6 @@ config :api, Oban,
 # CSV tmp directory
 config :api, csv_tmp_dir: "#{File.cwd!()}/csv_tmp"
 
-# Phoenix token salt
-config :api, phx_token_salt: System.get_env("PHX_TOKEN_SALT")
-
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

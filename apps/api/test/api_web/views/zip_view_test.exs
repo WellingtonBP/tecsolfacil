@@ -3,8 +3,8 @@ defmodule ApiWeb.ZipViewTest do
 
   import Phoenix.View
 
-  alias ApiWeb.ZipView
   alias Api.ZipCode.Info
+  alias ApiWeb.ZipView
 
   describe "render/2" do
     test "renders zip.json" do

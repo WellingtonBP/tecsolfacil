@@ -1,9 +1,14 @@
 defmodule Api.ZipCode do
+  @moduledoc """
+    ZipCode Context Functions
+  """
+
   alias Api.Repo
+  alias Api.ViaCEP.Client, as: ViaCEP
   alias Api.Worker.SendCsv
   alias Api.ZipCode.Info, as: ZipInfo
-  alias Api.ViaCEP.Client, as: ViaCEP
 
+  @spec get_zipcode_info(binary()) :: {:ok | :error, Info.t() | atom()}
   def get_zipcode_info(zip) do
     db_zip = Repo.get_by(ZipInfo, cep: zip)
 

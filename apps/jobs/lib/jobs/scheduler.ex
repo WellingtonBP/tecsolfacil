@@ -1,4 +1,5 @@
 defmodule Jobs.Scheduler do
+  @moduledoc false
   use GenServer
 
   alias Jobs.WorkerSupervisor
@@ -9,7 +10,7 @@ defmodule Jobs.Scheduler do
     GenServer.start_link(__MODULE__, worker_count, name: @me)
   end
 
-  def next_job() do
+  def next_job do
     GenServer.call(@me, :next_job)
   end
 

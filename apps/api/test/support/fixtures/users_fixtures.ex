@@ -1,4 +1,8 @@
 defmodule Api.UsersFixtures do
+  @moduledoc """
+    Test Helpers
+  """
+
   alias Api.Accounts
 
   def create_user do

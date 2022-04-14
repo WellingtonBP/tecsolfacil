@@ -1,4 +1,8 @@
 defmodule Api.Accounts.User do
+  @moduledoc """
+    User Schema
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -58,7 +62,9 @@ defmodule Api.Accounts.User do
   def valid_password?(_, _), do: false
 
   def get_errors_message(changeset) do
-    if !changeset.valid? do
+    if changeset.valid? do
+      nil
+    else
       errors =
         changeset.errors
         |> Map.new(fn {key, {message, meta}} ->
@@ -66,8 +72,6 @@ defmodule Api.Accounts.User do
         end)
 
       %{errors: errors}
-    else
-      nil
     end
   end
 
