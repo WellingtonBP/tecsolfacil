@@ -15,6 +15,11 @@ mix ecto.migrate
 mix run apps/api/priv/repo/seeds.exs
 mix phx.server
 ```
+Or with docker (set variables in a .env file):
+
+```
+ docker-compose up --build
+```
 
 ### Docs
 |Endpoint |Params |Description
